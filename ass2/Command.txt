@@ -1,0 +1,40 @@
+Terminal 1
+
+idlj -fall Calculator.idl
+
+javac *.java
+Note: ./CalculatorApp/CalculatorPOA.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+orbd-ORBInitialPort 4000
+
+
+Terminal 2
+
+java Server-ORBInitialPort 4000 -ORBInitialHost localhost&[2] 4778
+Server ready and waiting...
+
+
+Terminal 3
+
+
+java Client-ORBInitialPort 4000 -ORBInitialHost localhost
+
+
+
+Sure! Here's the explanation of the code that you can dictate to your teacher:
+
+Begin dictation:
+This code implements a simple client-server application using the CORBA (Common Object Request Broker Architecture) framework.
+
+The code consists of four files: `Calculator.idl`, `CalculatorImpl.java`, `Server.java`, and `Client.java`.
+
+Starting with `Calculator.idl`, it defines a module called `CalculatorApp`. Inside the module, there is an interface called `Calculator`. This interface specifies several methods such as `add`, `subtract`, `multiply`, `divide`, and `shutdown`.
+
+Moving on to `CalculatorImpl.java`, it is the implementation class for the `Calculator` interface. It extends the abstract base class `CalculatorPOA` which is generated from the IDL file. The `CalculatorImpl` class has a private instance variable called `orb`, which holds a reference to the ORB (Object Request Broker). The constructor of the class takes an `ORB` object as a parameter and assigns it to the `orb` variable. The class overrides the methods defined in the interface and provides the implementation for arithmetic operations like addition, subtraction, multiplication, and division. It also includes a `shutdown` method that shuts down the ORB.
+
+Moving on to `Server.java`, it is the server-side code. It starts by initializing the ORB using the `init` method. It then obtains a reference to the `RootPOA` (Portable Object Adapter) and activates the POA's POAManager. Next, it creates an instance of the `CalculatorImpl` class, passing the ORB reference to the constructor. It obtains an object reference from the servant using the `servant_to_reference` method. It then resolves the `NameService` and obtains a `NamingContextExt` object. Using the naming context, it converts the string name "ABC" into a `NameComponent` array. Finally, it binds the object reference to the name "ABC" in the naming context. The server enters an infinite loop, allowing it to handle client requests by calling `orb.run()`.
+
+Lastly, we have `Client.java`, which represents the client-side code. It starts by initializing the ORB similar to the server. It resolves the `NameService` and obtains a `NamingContextExt` object. It uses the naming context to resolve the object reference associated with the name "ABC" and narrows it to the `Calculator` interface. It then prompts the user to enter a choice for arithmetic operations. Based on the choice, it prompts for two numbers and performs the corresponding operation using the methods provided by the `Calculator` interface. The result is displayed on the console. This process continues until the user chooses to exit.
+
+That concludes the explanation of the code.

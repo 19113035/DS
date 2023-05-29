@@ -1,0 +1,37 @@
+export MPJ_HOME=/home/student/Downloads/mpj-v0_44 // Path
+
+javac -cp $MPJ_HOME/lib/mpj.jar DistributedSum.java
+
+$MPJ_HOME/bin/mpjrun.sh -np 6 DistributedSum
+
+
+
+Sure! Here's the explanation of the code that you can dictate to your teacher:
+
+This code demonstrates a distributed sum calculation using MPI (Message Passing Interface) in Java.
+
+The code starts by initializing the MPI environment using `MPI.Init(args)`. It sets up the necessary data structures and communication channels among the MPI processes.
+
+The program then obtains the rank and size of the current process using `MPI.COMM_WORLD.Rank()` and `MPI.COMM_WORLD.Size()`. The rank represents the identifier of the current process, while the size indicates the total number of processes in the MPI program.
+
+Next, an input array `array` with values 1 to 10 is defined. The total number of elements `n` is computed as the length of the array.
+
+The program calculates the number of elements to be processed by each process (`local_n`) by dividing the total number of elements `n` by the number of processes `size`. It also determines the number of remaining elements `remainder` using the modulus operator.
+
+A local array `local_array` is created to hold the elements for each process. Its size is determined by adding `1` to `local_n` if the rank of the process is less than `remainder`.
+
+The offset for the current process is calculated as `rank * local_n + Math.min(rank, remainder)`. This offset determines the starting index of the elements that the current process will process.
+
+The program then assigns the corresponding elements from the input array `array` to the local array `local_array` using a loop.
+
+After that, a local sum `local_sum` is computed by summing up the elements in the local array.
+
+An array `global_sums` is created to hold the global sum computed by each process. Its size is equal to the total number of processes.
+
+The program performs an "allgather" operation using `MPI.COMM_WORLD.Allgather`. It gathers the local sums (`local_sum`) from each process and stores them in the `global_sums` array. Each process contributes its local sum, and after this operation, all processes will have the global sum from each process in the `global_sums` array.
+
+Finally, the program prints the intermediate and final sums. This code block is executed only by the process with rank 0. It prints the number of processes entered, the intermediate sums received from each process, and the total sum computed by adding up the intermediate sums.
+
+The MPI environment is finalized using `MPI.Finalize()` to clean up resources and terminate the MPI execution.
+
+That's the explanation of the code! It showcases the use of MPI for parallel computation and communication among processes to calculate the sum of an array.
